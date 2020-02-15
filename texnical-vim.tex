@@ -568,11 +568,12 @@
   Vimtex과 coc.nvim은 vim-plug로 설치하면 되는데, \textct{init.vim}에 아래와
   같이 추가하면 됩니다:
   \begin{vimcode}
-    call plug#begin('~/.local/share/nvim/plugged')  "Windows의 경우 이전 슬라이드 참조
+    call plug#begin('~/.local/share/nvim/plugged')
     Plug 'lervag/vimtex'
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }
     call plug#end()
     let g:vimtex_view_method = 'skim'
+    let g:coc_global_extensions = ['coc-texlab']
   \end{vimcode}
 
   Neovim을 껐다 켠 후 \textct{:PlugInstall} 해줍니다.
