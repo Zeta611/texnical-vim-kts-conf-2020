@@ -704,4 +704,16 @@
     " let g:XkbSwitchLib = '/usr/local/lib/libInputSourceSwitcher.dylib'
   \end{vimcode}
 \end{frame}
+
+\begin{frame}[fragile]{2. Vim에서 Option 키 사용하기}
+  Vim에서 Option 키를 매핑하기 위해서는 \verb/nnoremap <A-h>/와 같이 \verb/A/로 
+  추가를 하면 되지만, 바로 사용할 수는 없습니다.
+  다행히 iTerm으로는 이를 우회할 수 있는데요, iTerm Preferences에서 Profiles
+  선택 후 Keys pane에서 아래와 같이 Left/Right Option Key: Esc+로 설정하면
+  됩니다:
+
+  \begin{center}
+    \includegraphics[width=0.8\linewidth]{figures/iterm-alt-setup}
+  \end{center}
+\end{frame}
 \end{document}
