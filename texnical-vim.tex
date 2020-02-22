@@ -1,4 +1,5 @@
 %! TEX program = xelatex
+\PassOptionsToPackage{unicode}{hyperref}
 % \documentclass[draft]{beamer}
 \documentclass{beamer}
 
@@ -653,5 +654,54 @@
   Neovim 설정: \url{https://github.com/Zeta611/dotfiles}
 
   \centering\includegraphics[width=0.35\linewidth]{figures/how-great-vim-is}
+\end{frame}
+
+\section{\texorpdfstring{$+\alpha$}{+⍺}}
+\begin{frame}{추가 자료}
+  발표가 끝난 후, `어떤 자료가 있으면 좋을 것 같다'는 의견이 있어서 자료를
+  추가합니다.
+  내용을 중간에 보충하려다가 업데이트된 부분을 쉽게 보실 수 있도록 뒤에
+  추가하여 정리합니다.
+\end{frame}
+
+\begin{frame}[allowframebreaks,fragile]{1. 자동 한/영 전환}
+  Vim에서 한글 \TeX{} 문서를 작성하신다면, normal 모드의 명령어를 영어로
+  입력하다가 insert 모드에서 한글로 입력을 하기 위해 한/영 전환을 하는 것이
+  상당히 불편합니다.
+
+  이를 위해서 (macOS에서)
+  \href{https://github.com/vovkasm/input-source-switcher}{input-source-switcher}와
+  Vim plugin인 \href{https://github.com/lyokha/vim-xkbswitch}{vim-xkbswitch}을
+  사용합니다.
+
+  \framebreak
+  다음과 같이 input-source-switcher을 설치합니다.
+  cmake에 \verb/-DCMAKE_INSTALL_PREFIX:PATH=$HOME/을 준 이유는 홈 디렉터리에
+  설치하기 위함입니다.
+  옵션을 안 주면 기본 설치 경로에 설치됩니다.
+  터미널에서 다음과 같이 실행합니다:
+  \begin{shellcode}
+    git clone https://github.com/vovkasm/input-source-switcher.git
+    cd input-source-switcher
+    mkdir build && cd build
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=$HOME ..
+    make
+    make install
+    cd ../..
+  \end{shellcode}
+
+  \framebreak
+  이제 Vim에서 vim-xkbswitch를 설정하면 됩니다.
+  \verb/init.vim/에 다음과 같이 추가합니다:
+  \begin{vimcode}
+    call plug#begin('~/.local/share/nvim/plugged')
+    Plug 'lyokha/vim-xkbswitch'
+    call plug#end()
+
+    let g:XkbSwitchEnabled = 1
+    let g:XkbSwitchLib = expand('~/lib/libInputSourceSwitcher.dylib')
+    " 기본 경로에 설치했다면 아래와 같이 설정합니다:
+    " let g:XkbSwitchLib = '/usr/local/lib/libInputSourceSwitcher.dylib'
+  \end{vimcode}
 \end{frame}
 \end{document}
