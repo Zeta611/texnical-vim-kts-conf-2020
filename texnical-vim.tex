@@ -658,7 +658,7 @@
 
 \section{\texorpdfstring{$+\alpha$}{+⍺}}
 \begin{frame}{추가 자료}
-  발표가 끝난 후, `어떤 자료가 있으면 좋을 것 같다'는 의견이 있어서 자료를
+  발표가 끝난 후, `이러이러한 자료가 있으면 좋을 것 같다'는 의견이 있어서 자료를
   추가합니다.
   내용을 중간에 보충하려다가 업데이트된 부분을 쉽게 보실 수 있도록 뒤에
   추가하여 정리합니다.
@@ -715,5 +715,65 @@
   \begin{center}
     \includegraphics[width=0.8\linewidth]{figures/iterm-alt-setup}
   \end{center}
+\end{frame}
+
+% Linux setup
+\begin{frame}[fragile,allowframebreaks]{3. Linux 설정}
+  본 설정은
+  \href{http://www.ktug.org/xe/index.php?document_srl=241426&mid=KTUG_QnA_board}{KTUG QnA에서 noname님의 설정}을 기반으로 하였습니다.
+  PDF 뷰어는
+  \href{http://www.ktug.org/xe/index.php?document_srl=241426&mid=KTUG_QnA_board}{Okular}를
+  사용합니다.
+  \href{https://brew.sh/}{Homebrew}를 사용합니다.
+  \begin{enumerate}
+    \item \url{https://docs.brew.sh/Homebrew-on-Linux}를 참고하여 \href{https://brew.sh/}{Homebrew}를 설치합니다.
+      \href{https://neovim.io/}{Neovim},
+      \href{https://texlab.netlify.com/}{TexLab}을 설치합니다.
+      \begin{shellcode}
+        brew install neovim texlab
+      \end{shellcode}
+
+    \item Python을 설치합니다.
+      \begin{itemize}
+        \item 평소에 Python으로 프로젝트를 하시는 분들은
+          \href{https://github.com/pyenv/pyenv#homebrew-on-macos}{pyenv}과
+          virtualenv 등으로 관리하시는 것을 권장드립니다.
+      \end{itemize}
+      \begin{shellcode}
+        brew install pyenv pyenv-virtualenv  # and setup Python, or simply
+        brew install python  # only if not already installed
+      \end{shellcode}
+
+    \item \href{https://github.com/mhinz/neovim-remote}{neovim-remote}(nvr)을 설치합니다.
+      \begin{shellcode}
+        pip3 install neovim-remote
+      \end{shellcode}
+      \begin{itemize}
+        \item 이는 Okular와 같은 외부 프로그램이 Neovim을 원격으로 조작하여
+          reverse search를 가능하게 합니다.
+      \end{itemize}
+
+    \item \url{https://github.com/junegunn/vim-plug#unix-1}을 참고하여 Vim
+      plugin manager \href{https://github.com/junegunn/vim-plug}{vim-plug}를
+      설치합니다.
+    \item \textct{\tat/.config/nvim/init.vim}에 다음과 같이 작성합니다:
+      \begin{vimcode}
+        call plug#begin('~/.local/share/nvim/plugged')
+        Plug 'lervag/vimtex'
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        call plug#end()
+        let g:coc_global_extensions = ['coc-texlab']
+        let g:vimtex_view_general_viewer = 'okular'
+        let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+        let g:vimtex_view_general_options_latexmk = '--unique'
+      \end{vimcode}
+      그 후 (다시 source하거나) 파일을 다시 열어서 \verb/:PlugInstall/합니다.
+
+    \item Okular 설정>편집기의 ``사용자 정의 텍스트 편집기''를 다음과 같이
+      설정합니다:
+      \begin{shellcode}
+        nvr --remote-silent %f -c %l
+      \end{shellcode}
+  \end{enumerate}
 \end{frame}
 \end{document}
